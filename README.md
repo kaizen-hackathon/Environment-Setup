@@ -51,7 +51,6 @@ To make it easier to start JupyterLab with your environment activated, you can c
 
 Open a text editor (e.g., Notepad) and paste the following code:
 ```bash
-@echo off
 call conda activate p311
 jupyter-lab
 ```
