@@ -7,8 +7,6 @@ This guide will help you set up a Python environment using Miniconda and install
 - Visit the Miniconda download page: [Miniconda Downloads](https://docs.conda.io/en/latest/miniconda.html)
 - Download the appropriate Miniconda installer for your operating system:
   - **Windows**: `Miniconda3 Windows 64-bit`
-  - **macOS**: `Miniconda3 macOS 64-bit`
-  - **Linux**: `Miniconda3 Linux 64-bit`
 
 ## 2. Installation
 
@@ -54,9 +52,7 @@ To make it easier to start JupyterLab with your environment activated, you can c
 Open a text editor (e.g., Notepad) and paste the following code:
 ```bash
 @echo off
-REM Activate the Miniconda environment 'p311'
 call conda activate p311
-REM Start JupyterLab
 jupyter-lab
 ```
 Save the file with a .bat extension, for example, s.bat.
