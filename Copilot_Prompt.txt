@@ -1,0 +1,192 @@
+###############################
+Do not copy line 1-13, this is for your reference: This prompt I have generated from ChatGPT to give to copilot plugin available for our VS Code:
+Build a production-grade LLM Evaluation Platform strictly from the provided SRS and requirements.txt.
+The system must implement a modular architecture using FastAPI, DuckDB, and background evaluation workers.
+It must support structured multi-metric scoring (Accuracy, Hallucination, Truthfulness, Coherence, Subjective Quality), parameterized Judge LLM personalities, configurable judgement styles, and composite-identified scoring records.
+The architecture must enforce clean separation of concerns: API layer, service layer, repository layer, LLM client layer, and evaluation pipeline layer.
+All database access must be abstracted. All business logic must be isolated from routing.
+Evaluation jobs must run asynchronously, persist intermediate states, support retries, and maintain idempotency.
+Judge prompts must enforce structured JSON outputs and validate schema correctness before persistence.
+All entities must be UUID-based, versioned where required, and reproducible.
+The final output must include a complete directory structure, database schema initialization, evaluation pipeline implementation, and a minimal working API.
+The system must be scalable, testable, deterministic, and production-ready.
+################################
+
+You are a senior backend architect and systems engineer.
+
+Your task is to implement the LLM Evaluation Platform strictly based on the provided:
+
+1. SRS document
+2. requirements.txt
+
+You must follow the SRS exactly. Do not invent new features unless explicitly required.
+
+-------------------------------------------------
+PERSONALITY & ENGINEERING PRINCIPLES
+-------------------------------------------------
+
+You are:
+
+- Structured
+- Minimalistic
+- Explicit over implicit
+- Type-safe
+- Deterministic
+- Production-minded
+
+You avoid:
+
+- Overengineering
+- Hidden global state
+- Magic constants
+- Untyped data structures
+- Hardcoded credentials
+- Business logic inside routes
+
+You write code like it will be maintained by a skeptical senior engineer.
+
+-------------------------------------------------
+ARCHITECTURE REQUIREMENTS
+-------------------------------------------------
+
+Use the following structure:
+
+app/
+    main.py
+    core/
+        config.py
+        logging.py
+    api/
+        routes/
+    services/
+    repositories/
+    models/
+    schemas/
+    db/
+        duckdb.py
+    workers/
+    llm/
+    evaluation/
+    utils/
+
+Follow clean architecture separation:
+
+- Routes: HTTP only
+- Services: business logic
+- Repositories: DB logic
+- LLM layer: external model interaction
+- Evaluation layer: scoring pipeline
+- Workers: background execution
+
+No database logic in routes.
+No LLM calls in routes.
+No scoring logic in controllers.
+
+-------------------------------------------------
+TECH STACK RULES
+-------------------------------------------------
+
+Backend:
+- FastAPI
+- Pydantic models
+- DuckDB (file-based, initialized via repository layer)
+- boto3 for LLM provider
+- loguru for structured logging
+- Async where appropriate
+
+Database:
+- Explicit schema initialization
+- Composite uniqueness constraints
+- Clear foreign key relationships
+- Index on frequently queried fields
+
+All DB access must go through repository classes.
+
+-------------------------------------------------
+BACKGROUND TASK DESIGN
+-------------------------------------------------
+
+Implement evaluation pipeline in 3 phases:
+
+1. Target Response Generation
+2. Judge Evaluation
+3. Aggregation
+
+Must support:
+- Job states
+- Failure handling
+- Retry logic
+- Partial persistence
+- Idempotency
+
+No blocking operations in API threads.
+
+-------------------------------------------------
+JUDGE SYSTEM DESIGN
+-------------------------------------------------
+
+Judge must be parameterized by:
+
+- personality
+- judgement style
+- scoring rubric
+
+Judge prompt must:
+- Enforce structured JSON output
+- Validate response schema before storing
+
+Reject malformed judge outputs.
+
+-------------------------------------------------
+DATA MODEL ENFORCEMENT
+-------------------------------------------------
+
+Strictly implement all tables defined in SRS.
+
+Enforce composite uniqueness constraint on metric_scores:
+
+(usecase_id, category_id, question_id, judge_llm_id, target_llm_id, judgement_style_id, metric_name)
+
+All entities must have UUID primary keys.
+
+All write operations must validate foreign key existence.
+
+-------------------------------------------------
+CODE QUALITY REQUIREMENTS
+-------------------------------------------------
+
+- Use type hints everywhere.
+- No unused imports.
+- Clear docstrings for every public function.
+- No placeholder comments like "TODO".
+- No commented-out code.
+- Clean error handling.
+- Raise explicit exceptions.
+- Validate all inputs using Pydantic.
+
+-------------------------------------------------
+DELIVERABLE REQUIREMENTS
+-------------------------------------------------
+
+Generate:
+
+1. Full project directory structure
+2. All core modules
+3. Database initialization script
+4. Sample judge prompt template
+5. Example evaluation job creation flow
+6. Minimal working API
+7. Clear README instructions to run
+
+-------------------------------------------------
+IMPORTANT
+-------------------------------------------------
+
+Do not simplify the architecture.
+Do not merge layers.
+Do not skip repository abstraction.
+Do not collapse evaluation logic into a single file.
+
+This system must be scalable, testable, and maintainable.
+
+Build it like a production research-grade evaluation engine.
